@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "XLP Brand Specification",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "brand_name",
+    "display_name",
+    "manufacturer_code",
+    "reverse_dns_prefix",
+    "plugin_id_prefix",
+    "module_id_prefix",
+    "plugin_dir_prefix",
+    "tagline",
+    "default_formats",
+    "optional_formats",
+    "trademark_notes"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "format": "semver"
+    },
+    "brand_name": {
+      "type": "string",
+      "const": "xlp"
+    },
+    "display_name": {
+      "type": "string",
+      "minLength": 3
+    },
+    "manufacturer_code": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_]{4}$"
+    },
+    "reverse_dns_prefix": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9.-]*\\.xlp$"
+    },
+    "plugin_id_prefix": {
+      "type": "string",
+      "const": "xlp."
+    },
+    "module_id_prefix": {
+      "type": "string",
+      "const": "xlp."
+    },
+    "plugin_dir_prefix": {
+      "type": "string",
+      "const": "xlp_"
+    },
+    "tagline": {
+      "type": "string",
+      "minLength": 10
+    },
+    "default_formats": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": ["vst3", "clap", "au", "lv2", "standalone"]
+      }
+    },
+    "optional_formats": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": ["vst3", "clap", "au", "lv2", "standalone"]
+      }
+    },
+    "trademark_notes": {
+      "type": "string",
+      "minLength": 10
+    }
+  }
+}

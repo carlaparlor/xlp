@@ -1,0 +1,243 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "XLP Governance Policy Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "policy_version",
+    "strict_mode_default",
+    "brand_file",
+    "waivers_file",
+    "traceability_file",
+    "layers",
+    "modularity",
+    "realtime_safety",
+    "extensibility",
+    "moddability",
+    "research",
+    "documentation",
+    "waivers",
+    "constitutional_floors"
+  ],
+  "properties": {
+    "schema_version": { "type": "string", "format": "semver" },
+    "policy_version": { "type": "string", "format": "semver" },
+    "strict_mode_default": { "type": "boolean" },
+    "brand_file": { "type": "string", "minLength": 1 },
+    "waivers_file": { "type": "string", "minLength": 1 },
+    "traceability_file": { "type": "string", "minLength": 1 },
+    "layers": {
+      "type": "object",
+      "required": ["core", "modules", "adapters", "plugins", "tools"],
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "directory",
+          "manifest_filename",
+          "allowed_dependencies",
+          "required_test_categories",
+          "required_docs"
+        ],
+        "properties": {
+          "directory": { "type": "string", "minLength": 1 },
+          "manifest_filename": { "type": "string", "minLength": 1 },
+          "allowed_dependencies": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": { "type": "string", "enum": ["core", "modules", "adapters", "plugins", "tools"] }
+          },
+          "required_test_categories": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": { "type": "string", "minLength": 2 }
+          },
+          "required_docs": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": { "type": "string", "minLength": 2 }
+          }
+        }
+      }
+    },
+    "modularity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "allow_circular_dependencies",
+        "allow_cross_plugin_imports",
+        "max_source_file_lines",
+        "dsp_forbidden_ui_includes",
+        "adapter_forbidden_dsp_patterns"
+      ],
+      "properties": {
+        "allow_circular_dependencies": { "type": "boolean" },
+        "allow_cross_plugin_imports": { "type": "boolean" },
+        "max_source_file_lines": { "type": "integer", "minimum": 100, "maximum": 2000 },
+        "dsp_forbidden_ui_includes": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "adapter_forbidden_dsp_patterns": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+      }
+    },
+    "realtime_safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "require_rt_safety_check",
+        "rt_path_segments",
+        "rt_source_extensions",
+        "non_rt_scope_markers",
+        "forbidden_patterns",
+        "required_sample_rates",
+        "allowed_thread_communication"
+      ],
+      "properties": {
+        "require_rt_safety_check": { "type": "boolean" },
+        "rt_path_segments": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "rt_source_extensions": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "non_rt_scope_markers": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["begin", "end", "line_allow", "function_names"],
+          "properties": {
+            "begin": { "type": "string" },
+            "end": { "type": "string" },
+            "line_allow": { "type": "string" },
+            "function_names": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "forbidden_patterns": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "pattern", "reason"],
+            "properties": {
+              "id": { "type": "string", "minLength": 2 },
+              "pattern": { "type": "string", "minLength": 2 },
+              "reason": { "type": "string", "minLength": 10 }
+            }
+          }
+        },
+        "required_sample_rates": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "integer", "minimum": 8000 }
+        },
+        "allowed_thread_communication": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "extensibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["min_plugin_extension_points", "baselines_dir"],
+      "properties": {
+        "min_plugin_extension_points": { "type": "integer", "minimum": 1 },
+        "baselines_dir": { "type": "string", "minLength": 1 }
+      }
+    },
+    "moddability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "require_modding_for_plugins",
+        "min_plugin_mod_surfaces",
+        "allowed_fallback_strategies",
+        "allowed_conflict_resolutions",
+        "mods_dir"
+      ],
+      "properties": {
+        "require_modding_for_plugins": { "type": "boolean" },
+        "min_plugin_mod_surfaces": { "type": "integer", "minimum": 1 },
+        "allowed_fallback_strategies": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "allowed_conflict_resolutions": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "mods_dir": { "type": "string", "minLength": 1 }
+      }
+    },
+    "research": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "directory",
+        "min_citations",
+        "min_words_per_section",
+        "required_frontmatter_fields",
+        "required_sections"
+      ],
+      "properties": {
+        "directory": { "type": "string", "minLength": 1 },
+        "min_citations": { "type": "integer", "minimum": 1 },
+        "min_words_per_section": { "type": "integer", "minimum": 10 },
+        "required_frontmatter_fields": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "required_sections": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+      }
+    },
+    "documentation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "diataxis_quadrants",
+        "adr_directory",
+        "rules_reference_doc",
+        "min_doc_words",
+        "required_adr_frontmatter_fields",
+        "required_adr_sections",
+        "forbidden_placeholders"
+      ],
+      "properties": {
+        "diataxis_quadrants": { "type": "array", "minItems": 4, "items": { "type": "string" } },
+        "adr_directory": { "type": "string", "minLength": 1 },
+        "rules_reference_doc": { "type": "string", "minLength": 1 },
+        "min_doc_words": { "type": "integer", "minimum": 10 },
+        "required_adr_frontmatter_fields": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "required_adr_sections": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "forbidden_placeholders": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+      }
+    },
+    "waivers": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["max_duration_days", "min_justification_length", "non_waivable_rules"],
+      "properties": {
+        "max_duration_days": { "type": "integer", "minimum": 1, "maximum": 180 },
+        "min_justification_length": { "type": "integer", "minimum": 20 },
+        "non_waivable_rules": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[A-Z]{3}-[0-9]{3}$" }
+        }
+      }
+    },
+    "constitutional_floors": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "min_research_citations",
+        "min_plugin_mod_surfaces",
+        "min_plugin_extension_points",
+        "max_source_file_lines_ceiling",
+        "required_non_waivable_rules"
+      ],
+      "properties": {
+        "min_research_citations": { "type": "integer", "minimum": 3 },
+        "min_plugin_mod_surfaces": { "type": "integer", "minimum": 2 },
+        "min_plugin_extension_points": { "type": "integer", "minimum": 2 },
+        "max_source_file_lines_ceiling": { "type": "integer", "minimum": 200, "maximum": 1000 },
+        "required_non_waivable_rules": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[A-Z]{3}-[0-9]{3}$" }
+        }
+      }
+    }
+  }
+}

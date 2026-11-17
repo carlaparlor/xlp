@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0.0",
+  "brand_name": "xlp",
+  "display_name": "XLP Audio",
+  "manufacturer_code": "XLP_",
+  "reverse_dns_prefix": "com.xlp",
+  "plugin_id_prefix": "xlp.",
+  "module_id_prefix": "xlp.",
+  "plugin_dir_prefix": "xlp_",
+  "tagline": "Modular, scalable, extensible, and moddable audio plugins.",
+  "default_formats": [
+    "vst3"
+  ],
+  "optional_formats": [
+    "clap",
+    "au",
+    "lv2",
+    "standalone"
+  ],
+  "trademark_notes": "VST is a trademark of Steinberg Media Technologies GmbH; VST3 SDK >= 3.8.0 is used under the MIT License."
+}

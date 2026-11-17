@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0.0",
+  "id": "xlp.tools.xlp_gate",
+  "name": "XLP Architectural Enforcement Gate",
+  "brand": "xlp",
+  "layer": "tools",
+  "kind": "governance_tool",
+  "version": "1.0.0",
+  "api_version": "1.0.0",
+  "abi_version": 1,
+  "stability": "stable",
+  "description": "Zero-dependency architectural fitness engine strictly enforcing XLP modularity, scalability, real-time safety, extensibility, moddability, research, testing, and documentation standards.",
+  "dependencies": [],
+  "public_api_paths": [
+    "cli.py",
+    "runner.py",
+    "registry.py",
+    "models.py",
+    "schema_validator.py",
+    "scaffold.py"
+  ],
+  "extension_points": [
+    {
+      "id": "gate.rules",
+      "interface": "tools.xlp_gate.registry.RuleRegistry.register",
+      "version": "1.0.0",
+      "lifecycle": "init",
+      "description": "Register new architectural fitness rules with RuleSpec metadata and deterministic checker functions."
+    },
+    {
+      "id": "gate.report_formatters",
+      "interface": "tools.xlp_gate.runner.GateReport",
+      "version": "1.0.0",
+      "lifecycle": "runtime",
+      "description": "Structured report model allowing external reporters for CI annotations, SARIF, or dashboards."
+    }
+  ],
+  "research_refs": [
+    "RES-0001",
+    "RES-0002",
+    "RES-0003",
+    "RES-0004"
+  ],
+  "adr_refs": [
+    "ADR-0001",
+    "ADR-0002",
+    "ADR-0003",
+    "ADR-0004",
+    "ADR-0005"
+  ],
+  "testing": {
+    "directory": "tests",
+    "command": "python3 -m unittest discover -s tools/xlp_gate/tests -p test_*.py -v",
+    "categories": [
+      "unit",
+      "adversarial",
+      "integration",
+      "schema"
+    ]
+  },
+  "docs": {
+    "readme": "README.md",
+    "architecture": "docs/architecture.md",
+    "api": "docs/api.md",
+    "testing": "docs/testing.md"
+  }
+}

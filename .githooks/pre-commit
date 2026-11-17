@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# XLP_MANAGED_HOOK
+set -euo pipefail
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+echo "[xlp-gate] Running strict pre-commit architectural, research, and documentation checks..."
+exec "${REPO_ROOT}/xlp-gate" check --strict

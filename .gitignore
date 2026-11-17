@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+
+# Build & C++/Rust audio plugin artifacts
+build/
+out/
+dist/
+target/
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dylib
+*.dll
+*.vst3/
+*.clap
+*.component/
+*.lv2/
+
+# Gate reports & temporary outputs
+.xlp-gate-cache/
+gate-report.json
+gate-report.md
+
+# OS & Editor files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.vscode/
+.idea/

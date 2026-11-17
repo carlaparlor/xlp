@@ -1,0 +1,344 @@
+{
+  "schema_version": "1.0.0",
+  "policy_version": "1.0.0",
+  "strict_mode_default": true,
+  "brand_file": "governance/brand.json",
+  "waivers_file": "governance/waivers.json",
+  "traceability_file": "governance/traceability.json",
+  "layers": {
+    "core": {
+      "directory": "core",
+      "manifest_filename": "module.manifest.json",
+      "allowed_dependencies": [
+        "core"
+      ],
+      "required_test_categories": [
+        "unit",
+        "dsp_invariants",
+        "rt_safety",
+        "regression",
+        "fuzz"
+      ],
+      "required_docs": [
+        "README.md",
+        "docs/architecture.md",
+        "docs/api.md",
+        "docs/testing.md"
+      ]
+    },
+    "modules": {
+      "directory": "modules",
+      "manifest_filename": "module.manifest.json",
+      "allowed_dependencies": [
+        "core",
+        "modules"
+      ],
+      "required_test_categories": [
+        "unit",
+        "dsp_invariants",
+        "rt_safety",
+        "regression",
+        "fuzz"
+      ],
+      "required_docs": [
+        "README.md",
+        "docs/architecture.md",
+        "docs/api.md",
+        "docs/testing.md"
+      ]
+    },
+    "adapters": {
+      "directory": "adapters",
+      "manifest_filename": "module.manifest.json",
+      "allowed_dependencies": [
+        "core",
+        "modules"
+      ],
+      "required_test_categories": [
+        "unit",
+        "host_conformance",
+        "state_roundtrip"
+      ],
+      "required_docs": [
+        "README.md",
+        "docs/architecture.md",
+        "docs/api.md",
+        "docs/testing.md"
+      ]
+    },
+    "plugins": {
+      "directory": "plugins",
+      "manifest_filename": "plugin.manifest.json",
+      "allowed_dependencies": [
+        "core",
+        "modules",
+        "adapters"
+      ],
+      "required_test_categories": [
+        "unit",
+        "dsp_invariants",
+        "rt_safety",
+        "state_roundtrip",
+        "mod_loading",
+        "host_validation"
+      ],
+      "required_docs": [
+        "README.md",
+        "docs/architecture.md",
+        "docs/api.md",
+        "docs/testing.md",
+        "docs/modding.md"
+      ]
+    },
+    "tools": {
+      "directory": "tools",
+      "manifest_filename": "module.manifest.json",
+      "allowed_dependencies": [
+        "tools"
+      ],
+      "required_test_categories": [
+        "unit",
+        "adversarial",
+        "integration",
+        "schema"
+      ],
+      "required_docs": [
+        "README.md",
+        "docs/architecture.md",
+        "docs/api.md",
+        "docs/testing.md"
+      ]
+    }
+  },
+  "modularity": {
+    "allow_circular_dependencies": false,
+    "allow_cross_plugin_imports": false,
+    "max_source_file_lines": 600,
+    "dsp_forbidden_ui_includes": [
+      "juce_gui_basics",
+      "juce_gui_extra",
+      "juce_graphics",
+      "visage",
+      "imgui",
+      "webview",
+      "/ui/",
+      "\"ui/"
+    ],
+    "adapter_forbidden_dsp_patterns": [
+      "biquad",
+      "fft_process",
+      "oscillator_tick"
+    ]
+  },
+  "realtime_safety": {
+    "require_rt_safety_check": true,
+    "rt_path_segments": [
+      "dsp",
+      "realtime",
+      "audio_thread"
+    ],
+    "rt_source_extensions": [
+      ".c",
+      ".cc",
+      ".cpp",
+      ".cxx",
+      ".h",
+      ".hh",
+      ".hpp",
+      ".hxx",
+      ".rs"
+    ],
+    "non_rt_scope_markers": {
+      "begin": "XLP_NON_RT_BEGIN",
+      "end": "XLP_NON_RT_END",
+      "line_allow": "XLP_NON_RT_INIT",
+      "function_names": [
+        "prepare",
+        "prepareToPlay",
+        "prepare_to_play",
+        "releaseResources",
+        "release_resources",
+        "initialize",
+        "init",
+        "activate",
+        "deactivate",
+        "setup",
+        "configure"
+      ]
+    },
+    "forbidden_patterns": [
+      {
+        "id": "heap_malloc",
+        "pattern": "\\b(malloc|calloc|realloc|free)\\s*\\(",
+        "reason": "Dynamic C heap allocation or deallocation blocks or causes unbounded latency on the audio thread."
+      },
+      {
+        "id": "cpp_new_delete",
+        "pattern": "\\b(new|delete)(\\s*\\[\\s*\\])?\\s+[A-Za-z_]",
+        "reason": "C++ new/delete invokes global heap allocator on the audio thread."
+      },
+      {
+        "id": "cpp_smart_ptr_alloc",
+        "pattern": "\\bstd::(make_unique|make_shared)\\b",
+        "reason": "Smart pointer factories allocate heap memory."
+      },
+      {
+        "id": "mutex_lock",
+        "pattern": "\\b(std::(mutex|recursive_mutex|timed_mutex|shared_mutex|lock_guard|unique_lock|scoped_lock|condition_variable)|pthread_mutex_(lock|unlock)|Mutex::lock|RwLock::(read|write))\\b",
+        "reason": "Mutex locks risk unbounded priority inversion on the audio thread."
+      },
+      {
+        "id": "blocking_io",
+        "pattern": "\\b(printf|fprintf|sprintf|fopen|fclose|fread|fwrite|std::(cout|cerr|clog|ifstream|ofstream|fstream)|File::open|File::create)\\b|\\b(println|eprintln)!\\s*\\(",
+        "reason": "Filesystem or console I/O performs blocking OS syscalls."
+      },
+      {
+        "id": "thread_sleep_spawn",
+        "pattern": "\\b(std::thread|std::this_thread::sleep_for|std::this_thread::sleep_until|pthread_create|pthread_join|usleep|nanosleep|sleep\\s*\\(|thread::spawn|thread::sleep)\\b",
+        "reason": "Spawning or sleeping threads violates hard real-time deadlines."
+      },
+      {
+        "id": "cpp_exceptions",
+        "pattern": "\\bthrow\\b",
+        "reason": "Throwing exceptions performs heap allocation and non-deterministic stack unwinding."
+      },
+      {
+        "id": "dynamic_container_growth",
+        "pattern": "\\.(push_back|emplace_back|resize|reserve|push|extend|insert)\\s*\\(",
+        "reason": "Mutating heap-backed containers may trigger reallocation during audio processing."
+      }
+    ],
+    "required_sample_rates": [
+      44100,
+      48000,
+      96000
+    ],
+    "allowed_thread_communication": [
+      "spsc_ringbuffer",
+      "lock_free_queue",
+      "atomics",
+      "double_buffer",
+      "triple_buffer",
+      "rcu_snapshot"
+    ]
+  },
+  "extensibility": {
+    "min_plugin_extension_points": 2,
+    "baselines_dir": "governance/baselines"
+  },
+  "moddability": {
+    "require_modding_for_plugins": true,
+    "min_plugin_mod_surfaces": 2,
+    "allowed_fallback_strategies": [
+      "bypass_mod_and_warn",
+      "revert_default",
+      "disable_mod_safely"
+    ],
+    "allowed_conflict_resolutions": [
+      "deterministic_priority",
+      "explicit_load_order"
+    ],
+    "mods_dir": "mods"
+  },
+  "research": {
+    "directory": "docs/research",
+    "min_citations": 3,
+    "min_words_per_section": 25,
+    "required_frontmatter_fields": [
+      "id",
+      "title",
+      "status",
+      "date",
+      "scope",
+      "confidence",
+      "last_verified",
+      "related_adrs",
+      "related_components"
+    ],
+    "required_sections": [
+      "Problem & Research Questions",
+      "Prior Art & Industry Standards",
+      "Technical Deep Dive",
+      "Comparative Trade-offs",
+      "Benchmarks & Empirical Evidence",
+      "Risks, Edge Cases & Failure Modes",
+      "Recommendations & Architectural Implications",
+      "References"
+    ]
+  },
+  "documentation": {
+    "diataxis_quadrants": [
+      "tutorials",
+      "how-to",
+      "reference",
+      "explanation"
+    ],
+    "adr_directory": "docs/adr",
+    "rules_reference_doc": "docs/reference/enforcement-rules.md",
+    "min_doc_words": 40,
+    "required_adr_frontmatter_fields": [
+      "id",
+      "title",
+      "status",
+      "date",
+      "deciders",
+      "research_refs",
+      "enforced_by"
+    ],
+    "required_adr_sections": [
+      "Context and Problem Statement",
+      "Decision Drivers",
+      "Considered Options",
+      "Decision Outcome",
+      "Consequences",
+      "Confirmation",
+      "Pros and Cons of the Options"
+    ],
+    "forbidden_placeholders": [
+      "\\bTBD\\b",
+      "\\bTODO\\b",
+      "\\bFIXME\\b",
+      "\\bXXX\\b",
+      "\\bPLACEHOLDER\\b",
+      "(?i)\\[placeholder\\]|<placeholder>",
+      "(?i)\\bcoming\\s+soon\\b",
+      "(?i)\\blorem\\s+ipsum\\b",
+      "(?i)\\bfill\\s+this\\s+in\\b",
+      "(?i)\\bto\\s+be\\s+determined\\b"
+    ]
+  },
+  "waivers": {
+    "max_duration_days": 90,
+    "min_justification_length": 40,
+    "non_waivable_rules": [
+      "BRD-001",
+      "MOD-001",
+      "MOD-003",
+      "SCA-001",
+      "MDD-002",
+      "TST-003",
+      "TST-004",
+      "DOC-002",
+      "GOV-001",
+      "GOV-002",
+      "GOV-003",
+      "GOV-004"
+    ]
+  },
+  "constitutional_floors": {
+    "min_research_citations": 3,
+    "min_plugin_mod_surfaces": 2,
+    "min_plugin_extension_points": 2,
+    "max_source_file_lines_ceiling": 800,
+    "required_non_waivable_rules": [
+      "MOD-003",
+      "SCA-001",
+      "MDD-002",
+      "TST-003",
+      "GOV-001",
+      "GOV-002",
+      "GOV-003",
+      "GOV-004"
+    ]
+  }
+}

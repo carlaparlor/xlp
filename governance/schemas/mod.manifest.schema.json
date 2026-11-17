@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "XLP Mod Pack Manifest Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "id",
+    "name",
+    "version",
+    "author",
+    "target_plugin",
+    "target_mod_api_version",
+    "priority",
+    "description",
+    "surfaces",
+    "requested_capabilities",
+    "entry_files"
+  ],
+  "properties": {
+    "schema_version": { "type": "string", "format": "semver" },
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9_-]*\\.[a-z][a-z0-9_-]*$" },
+    "name": { "type": "string", "minLength": 3 },
+    "version": { "type": "string", "format": "semver" },
+    "author": { "type": "string", "minLength": 2 },
+    "target_plugin": { "type": "string", "pattern": "^xlp\\.[a-z][a-z0-9_*]*$" },
+    "target_mod_api_version": { "type": "string", "format": "semver" },
+    "priority": { "type": "integer", "minimum": 0, "maximum": 10000 },
+    "description": { "type": "string", "minLength": 15 },
+    "surfaces": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[a-z][a-z0-9_.]*$" }
+    },
+    "requested_capabilities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["filesystem", "network", "max_memory_kb"],
+      "properties": {
+        "filesystem": { "type": "boolean" },
+        "network": { "type": "boolean" },
+        "max_memory_kb": { "type": "integer", "minimum": 1, "maximum": 65536 }
+      }
+    },
+    "entry_files": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    }
+  }
+}
