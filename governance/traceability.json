@@ -1,0 +1,395 @@
+{
+  "schema_version": "1.0.0",
+  "rules": [
+    {
+      "rule_id": "BRD-001",
+      "domain": "brand",
+      "adr_ids": ["ADR-0001"],
+      "research_ids": ["RES-0004"],
+      "check_module": "tools/xlp_gate/checks/brand_checks.py",
+      "doc_anchor": "brd-001",
+      "positive_tests": ["test_brand_and_governance.test_brd_001_positive"],
+      "adversarial_tests": ["test_brand_and_governance.test_brd_001_adversarial_wrong_brand"]
+    },
+    {
+      "rule_id": "BRD-002",
+      "domain": "brand",
+      "adr_ids": ["ADR-0002"],
+      "research_ids": ["RES-0001"],
+      "check_module": "tools/xlp_gate/checks/brand_checks.py",
+      "doc_anchor": "brd-002",
+      "positive_tests": ["test_brand_and_governance.test_brd_002_positive"],
+      "adversarial_tests": ["test_brand_and_governance.test_brd_002_adversarial_duplicate_code_and_uid"]
+    },
+    {
+      "rule_id": "BRD-003",
+      "domain": "brand",
+      "adr_ids": ["ADR-0002"],
+      "research_ids": ["RES-0001"],
+      "check_module": "tools/xlp_gate/checks/brand_checks.py",
+      "doc_anchor": "brd-003",
+      "positive_tests": ["test_brand_and_governance.test_brd_003_positive"],
+      "adversarial_tests": ["test_brand_and_governance.test_brd_003_adversarial_bad_module_id"]
+    },
+    {
+      "rule_id": "MOD-001",
+      "domain": "modularity",
+      "adr_ids": ["ADR-0002"],
+      "research_ids": ["RES-0001", "RES-0004"],
+      "check_module": "tools/xlp_gate/checks/modularity_checks.py",
+      "doc_anchor": "mod-001",
+      "positive_tests": ["test_modularity.test_mod_001_positive"],
+      "adversarial_tests": ["test_modularity.test_mod_001_adversarial_missing_manifest"]
+    },
+    {
+      "rule_id": "MOD-002",
+      "domain": "modularity",
+      "adr_ids": ["ADR-0002"],
+      "research_ids": ["RES-0001", "RES-0004"],
+      "check_module": "tools/xlp_gate/checks/modularity_checks.py",
+      "doc_anchor": "mod-002",
+      "positive_tests": ["test_modularity.test_mod_002_positive"],
+      "adversarial_tests": ["test_modularity.test_mod_002_adversarial_core_imports_plugin_and_cross_plugin_import"]
+    },
+    {
+      "rule_id": "MOD-003",
+      "domain": "modularity",
+      "adr_ids": ["ADR-0002"],
+      "research_ids": ["RES-0001", "RES-0004"],
+      "check_module": "tools/xlp_gate/checks/modularity_checks.py",
+      "doc_anchor": "mod-003",
+      "positive_tests": ["test_modularity.test_mod_003_positive"],
+      "adversarial_tests": ["test_modularity.test_mod_003_adversarial_circular_dependency"]
+    },
+    {
+      "rule_id": "MOD-004",
+      "domain": "modularity",
+      "adr_ids": ["ADR-0002"],
+      "research_ids": ["RES-0001", "RES-0004"],
+      "check_module": "tools/xlp_gate/checks/modularity_checks.py",
+      "doc_anchor": "mod-004",
+      "positive_tests": ["test_modularity.test_mod_004_positive"],
+      "adversarial_tests": ["test_modularity.test_mod_004_adversarial_undeclared_source_import"]
+    },
+    {
+      "rule_id": "MOD-005",
+      "domain": "modularity",
+      "adr_ids": ["ADR-0002"],
+      "research_ids": ["RES-0001"],
+      "check_module": "tools/xlp_gate/checks/modularity_checks.py",
+      "doc_anchor": "mod-005",
+      "positive_tests": ["test_modularity.test_mod_005_positive"],
+      "adversarial_tests": ["test_modularity.test_mod_005_adversarial_dsp_includes_gui_and_missing_ui_dir"]
+    },
+    {
+      "rule_id": "MOD-006",
+      "domain": "modularity",
+      "adr_ids": ["ADR-0002"],
+      "research_ids": ["RES-0004"],
+      "check_module": "tools/xlp_gate/checks/modularity_checks.py",
+      "doc_anchor": "mod-006",
+      "positive_tests": ["test_modularity.test_mod_006_positive"],
+      "adversarial_tests": ["test_modularity.test_mod_006_adversarial_oversized_monolith_file"]
+    },
+    {
+      "rule_id": "SCA-001",
+      "domain": "scalability",
+      "adr_ids": ["ADR-0003"],
+      "research_ids": ["RES-0002"],
+      "check_module": "tools/xlp_gate/checks/scalability_checks.py",
+      "doc_anchor": "sca-001",
+      "positive_tests": ["test_scalability_rt.test_sca_001_positive_allows_prepare_preallocation_and_comments"],
+      "adversarial_tests": ["test_scalability_rt.test_sca_001_adversarial_catches_alloc_lock_io_throw_and_push_back"]
+    },
+    {
+      "rule_id": "SCA-002",
+      "domain": "scalability",
+      "adr_ids": ["ADR-0003"],
+      "research_ids": ["RES-0002"],
+      "check_module": "tools/xlp_gate/checks/scalability_checks.py",
+      "doc_anchor": "sca-002",
+      "positive_tests": ["test_scalability_rt.test_sca_002_positive"],
+      "adversarial_tests": ["test_scalability_rt.test_sca_002_adversarial_mutex_comm_and_no_denormal_protection"]
+    },
+    {
+      "rule_id": "SCA-003",
+      "domain": "scalability",
+      "adr_ids": ["ADR-0003"],
+      "research_ids": ["RES-0002"],
+      "check_module": "tools/xlp_gate/checks/scalability_checks.py",
+      "doc_anchor": "sca-003",
+      "positive_tests": ["test_scalability_rt.test_sca_003_positive"],
+      "adversarial_tests": ["test_scalability_rt.test_sca_003_adversarial_missing_or_unrealistic_budget"]
+    },
+    {
+      "rule_id": "SCA-004",
+      "domain": "scalability",
+      "adr_ids": ["ADR-0003"],
+      "research_ids": ["RES-0001", "RES-0002"],
+      "check_module": "tools/xlp_gate/checks/scalability_checks.py",
+      "doc_anchor": "sca-004",
+      "positive_tests": ["test_scalability_rt.test_sca_004_positive"],
+      "adversarial_tests": ["test_scalability_rt.test_sca_004_adversarial_missing_vst3_format"]
+    },
+    {
+      "rule_id": "EXT-001",
+      "domain": "extensibility",
+      "adr_ids": ["ADR-0004"],
+      "research_ids": ["RES-0003"],
+      "check_module": "tools/xlp_gate/checks/extensibility_checks.py",
+      "doc_anchor": "ext-001",
+      "positive_tests": ["test_extensibility_moddability.test_ext_001_positive"],
+      "adversarial_tests": ["test_extensibility_moddability.test_ext_001_adversarial_invalid_semver_and_abi"]
+    },
+    {
+      "rule_id": "EXT-002",
+      "domain": "extensibility",
+      "adr_ids": ["ADR-0004"],
+      "research_ids": ["RES-0003"],
+      "check_module": "tools/xlp_gate/checks/extensibility_checks.py",
+      "doc_anchor": "ext-002",
+      "positive_tests": ["test_extensibility_moddability.test_ext_002_positive"],
+      "adversarial_tests": ["test_extensibility_moddability.test_ext_002_adversarial_insufficient_and_duplicate_extension_points"]
+    },
+    {
+      "rule_id": "EXT-003",
+      "domain": "extensibility",
+      "adr_ids": ["ADR-0004"],
+      "research_ids": ["RES-0003"],
+      "check_module": "tools/xlp_gate/checks/extensibility_checks.py",
+      "doc_anchor": "ext-003",
+      "positive_tests": ["test_extensibility_moddability.test_ext_003_positive"],
+      "adversarial_tests": ["test_extensibility_moddability.test_ext_003_adversarial_duplicate_uid_and_bad_bounds"]
+    },
+    {
+      "rule_id": "EXT-004",
+      "domain": "extensibility",
+      "adr_ids": ["ADR-0004"],
+      "research_ids": ["RES-0003"],
+      "check_module": "tools/xlp_gate/checks/extensibility_checks.py",
+      "doc_anchor": "ext-004",
+      "positive_tests": ["test_extensibility_moddability.test_ext_004_positive_baseline_compatible_addition"],
+      "adversarial_tests": ["test_extensibility_moddability.test_ext_004_adversarial_breaking_param_removal_and_uid_change"]
+    },
+    {
+      "rule_id": "MDD-001",
+      "domain": "moddability",
+      "adr_ids": ["ADR-0004"],
+      "research_ids": ["RES-0003"],
+      "check_module": "tools/xlp_gate/checks/moddability_checks.py",
+      "doc_anchor": "mdd-001",
+      "positive_tests": ["test_extensibility_moddability.test_mdd_001_positive"],
+      "adversarial_tests": ["test_extensibility_moddability.test_mdd_001_adversarial_disabled_modding"]
+    },
+    {
+      "rule_id": "MDD-002",
+      "domain": "moddability",
+      "adr_ids": ["ADR-0004"],
+      "research_ids": ["RES-0003"],
+      "check_module": "tools/xlp_gate/checks/moddability_checks.py",
+      "doc_anchor": "mdd-002",
+      "positive_tests": ["test_extensibility_moddability.test_mdd_002_positive"],
+      "adversarial_tests": ["test_extensibility_moddability.test_mdd_002_adversarial_privileged_mod_surface_and_unsafe_fallback"]
+    },
+    {
+      "rule_id": "MDD-003",
+      "domain": "moddability",
+      "adr_ids": ["ADR-0004"],
+      "research_ids": ["RES-0003"],
+      "check_module": "tools/xlp_gate/checks/moddability_checks.py",
+      "doc_anchor": "mdd-003",
+      "positive_tests": ["test_extensibility_moddability.test_mdd_003_positive"],
+      "adversarial_tests": ["test_extensibility_moddability.test_mdd_003_adversarial_path_traversal_and_network_mod"]
+    },
+    {
+      "rule_id": "MDD-004",
+      "domain": "moddability",
+      "adr_ids": ["ADR-0004"],
+      "research_ids": ["RES-0003"],
+      "check_module": "tools/xlp_gate/checks/moddability_checks.py",
+      "doc_anchor": "mdd-004",
+      "positive_tests": ["test_extensibility_moddability.test_mdd_004_positive"],
+      "adversarial_tests": ["test_extensibility_moddability.test_mdd_004_adversarial_stub_modding_doc"]
+    },
+    {
+      "rule_id": "RES-001",
+      "domain": "research",
+      "adr_ids": ["ADR-0005"],
+      "research_ids": ["RES-0004"],
+      "check_module": "tools/xlp_gate/checks/research_checks.py",
+      "doc_anchor": "res-001",
+      "positive_tests": ["test_research_docs.test_res_001_positive"],
+      "adversarial_tests": ["test_research_docs.test_res_001_adversarial_missing_section"]
+    },
+    {
+      "rule_id": "RES-002",
+      "domain": "research",
+      "adr_ids": ["ADR-0005"],
+      "research_ids": ["RES-0004"],
+      "check_module": "tools/xlp_gate/checks/research_checks.py",
+      "doc_anchor": "res-002",
+      "positive_tests": ["test_research_docs.test_res_002_positive"],
+      "adversarial_tests": ["test_research_docs.test_res_002_adversarial_uncited_and_dangling_citations"]
+    },
+    {
+      "rule_id": "RES-003",
+      "domain": "research",
+      "adr_ids": ["ADR-0005"],
+      "research_ids": ["RES-0004"],
+      "check_module": "tools/xlp_gate/checks/research_checks.py",
+      "doc_anchor": "res-003",
+      "positive_tests": ["test_research_docs.test_res_003_positive"],
+      "adversarial_tests": ["test_research_docs.test_res_003_adversarial_stub_section"]
+    },
+    {
+      "rule_id": "RES-004",
+      "domain": "research",
+      "adr_ids": ["ADR-0005"],
+      "research_ids": ["RES-0004"],
+      "check_module": "tools/xlp_gate/checks/research_checks.py",
+      "doc_anchor": "res-004",
+      "positive_tests": ["test_research_docs.test_res_004_positive"],
+      "adversarial_tests": ["test_research_docs.test_res_004_adversarial_missing_research_target"]
+    },
+    {
+      "rule_id": "TST-001",
+      "domain": "testing",
+      "adr_ids": ["ADR-0003"],
+      "research_ids": ["RES-0002"],
+      "check_module": "tools/xlp_gate/checks/testing_checks.py",
+      "doc_anchor": "tst-001",
+      "positive_tests": ["test_testing_and_hooks.test_tst_001_positive"],
+      "adversarial_tests": ["test_testing_and_hooks.test_tst_001_adversarial_empty_test_dir"]
+    },
+    {
+      "rule_id": "TST-002",
+      "domain": "testing",
+      "adr_ids": ["ADR-0003"],
+      "research_ids": ["RES-0002"],
+      "check_module": "tools/xlp_gate/checks/testing_checks.py",
+      "doc_anchor": "tst-002",
+      "positive_tests": ["test_testing_and_hooks.test_tst_002_positive"],
+      "adversarial_tests": ["test_testing_and_hooks.test_tst_002_adversarial_missing_category_tag"]
+    },
+    {
+      "rule_id": "TST-003",
+      "domain": "testing",
+      "adr_ids": ["ADR-0003"],
+      "research_ids": ["RES-0002"],
+      "check_module": "tools/xlp_gate/checks/testing_checks.py",
+      "doc_anchor": "tst-003",
+      "positive_tests": ["test_testing_and_hooks.test_tst_003_positive_runs_plugin_test_suite"],
+      "adversarial_tests": ["test_testing_and_hooks.test_tst_003_adversarial_failing_test_and_zero_test_vacuous_run"]
+    },
+    {
+      "rule_id": "TST-004",
+      "domain": "testing",
+      "adr_ids": ["ADR-0001"],
+      "research_ids": ["RES-0004"],
+      "check_module": "tools/xlp_gate/checks/testing_checks.py",
+      "doc_anchor": "tst-004",
+      "positive_tests": ["test_testing_and_hooks.test_tst_004_positive"],
+      "adversarial_tests": ["test_testing_and_hooks.test_tst_004_adversarial_missing_rule_traceability"]
+    },
+    {
+      "rule_id": "DOC-001",
+      "domain": "documentation",
+      "adr_ids": ["ADR-0005"],
+      "research_ids": ["RES-0004"],
+      "check_module": "tools/xlp_gate/checks/documentation_checks.py",
+      "doc_anchor": "doc-001",
+      "positive_tests": ["test_research_docs.test_doc_001_positive"],
+      "adversarial_tests": ["test_research_docs.test_doc_001_adversarial_misfiled_adr_in_quadrant"]
+    },
+    {
+      "rule_id": "DOC-002",
+      "domain": "documentation",
+      "adr_ids": ["ADR-0005"],
+      "research_ids": ["RES-0004"],
+      "check_module": "tools/xlp_gate/checks/documentation_checks.py",
+      "doc_anchor": "doc-002",
+      "positive_tests": ["test_research_docs.test_doc_002_positive"],
+      "adversarial_tests": ["test_research_docs.test_doc_002_adversarial_accepted_adr_with_phantom_rule"]
+    },
+    {
+      "rule_id": "DOC-003",
+      "domain": "documentation",
+      "adr_ids": ["ADR-0005"],
+      "research_ids": ["RES-0004"],
+      "check_module": "tools/xlp_gate/checks/documentation_checks.py",
+      "doc_anchor": "doc-003",
+      "positive_tests": ["test_research_docs.test_doc_003_positive"],
+      "adversarial_tests": ["test_research_docs.test_doc_003_adversarial_missing_component_doc"]
+    },
+    {
+      "rule_id": "DOC-004",
+      "domain": "documentation",
+      "adr_ids": ["ADR-0005"],
+      "research_ids": ["RES-0004"],
+      "check_module": "tools/xlp_gate/checks/documentation_checks.py",
+      "doc_anchor": "doc-004",
+      "positive_tests": ["test_research_docs.test_doc_004_positive"],
+      "adversarial_tests": ["test_research_docs.test_doc_004_adversarial_undocumented_rule_and_orphan_heading"]
+    },
+    {
+      "rule_id": "DOC-005",
+      "domain": "documentation",
+      "adr_ids": ["ADR-0005"],
+      "research_ids": ["RES-0004"],
+      "check_module": "tools/xlp_gate/checks/documentation_checks.py",
+      "doc_anchor": "doc-005",
+      "positive_tests": ["test_research_docs.test_doc_005_positive"],
+      "adversarial_tests": ["test_research_docs.test_doc_005_adversarial_broken_file_link_and_bad_anchor"]
+    },
+    {
+      "rule_id": "DOC-006",
+      "domain": "documentation",
+      "adr_ids": ["ADR-0005"],
+      "research_ids": ["RES-0004"],
+      "check_module": "tools/xlp_gate/checks/documentation_checks.py",
+      "doc_anchor": "doc-006",
+      "positive_tests": ["test_research_docs.test_doc_006_positive"],
+      "adversarial_tests": ["test_research_docs.test_doc_006_adversarial_placeholder_debt"]
+    },
+    {
+      "rule_id": "GOV-001",
+      "domain": "governance",
+      "adr_ids": ["ADR-0001"],
+      "research_ids": ["RES-0004"],
+      "check_module": "tools/xlp_gate/checks/governance_checks.py",
+      "doc_anchor": "gov-001",
+      "positive_tests": ["test_brand_and_governance.test_gov_001_positive"],
+      "adversarial_tests": ["test_brand_and_governance.test_gov_001_adversarial_corrupt_policy_schema"]
+    },
+    {
+      "rule_id": "GOV-002",
+      "domain": "governance",
+      "adr_ids": ["ADR-0001"],
+      "research_ids": ["RES-0004"],
+      "check_module": "tools/xlp_gate/checks/governance_checks.py",
+      "doc_anchor": "gov-002",
+      "positive_tests": ["test_brand_and_governance.test_gov_002_positive"],
+      "adversarial_tests": ["test_brand_and_governance.test_gov_002_adversarial_ci_continue_on_error_and_nonexec_hook"]
+    },
+    {
+      "rule_id": "GOV-003",
+      "domain": "governance",
+      "adr_ids": ["ADR-0001"],
+      "research_ids": ["RES-0004"],
+      "check_module": "tools/xlp_gate/checks/governance_checks.py",
+      "doc_anchor": "gov-003",
+      "positive_tests": ["test_brand_and_governance.test_gov_003_positive_valid_waiver_waives_waivable_rule"],
+      "adversarial_tests": ["test_brand_and_governance.test_gov_003_adversarial_expired_and_non_waivable_rule"]
+    },
+    {
+      "rule_id": "GOV-004",
+      "domain": "governance",
+      "adr_ids": ["ADR-0001"],
+      "research_ids": ["RES-0004"],
+      "check_module": "tools/xlp_gate/checks/governance_checks.py",
+      "doc_anchor": "gov-004",
+      "positive_tests": ["test_brand_and_governance.test_gov_004_positive"],
+      "adversarial_tests": ["test_brand_and_governance.test_gov_004_adversarial_weakened_constitutional_floors"]
+    }
+  ]
+}

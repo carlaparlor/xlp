@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# XLP_MANAGED_HOOK
+set -euo pipefail
+
+MSG_FILE="$1"
+FIRST_LINE="$(head -n 1 "${MSG_FILE}" | tr -d '\r')"
+
+if [[ ! "${FIRST_LINE}" =~ ^(Merge\ |Revert\ ) ]]; then
+  CONV_RE='^(feat|fix|docs|research|test|refactor|arch|chore|ci|mod|perf|build)(\([a-z0-9_./-]+\))?(!)?: .{3,}$'
+  if [[ ! "${FIRST_LINE}" =~ ${CONV_RE} ]]; then
+    echo "[xlp-gate] Rejected commit message: '${FIRST_LINE}'" >&2
+    echo "Expected Conventional Commits format: <type>(<scope>): <summary>" >&2
+    echo "Allowed types: feat, fix, docs, research, test, refactor, arch, chore, ci, mod, perf, build" >&2
+    exit 1
+  fi
+fi
+
+# Preserve Arena co-author trailer if not already present.
+TRAILER='Co-authored-by: arena-agent <297053741+arena-agent@users.noreply.github.com>'
+if ! grep -Fqx "${TRAILER}" "${MSG_FILE}" 2>/dev/null; then
+  printf '\n%s\n' "${TRAILER}" >> "${MSG_FILE}"
+fi
